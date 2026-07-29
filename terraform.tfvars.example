@@ -1,5 +1,6 @@
 # Copy to terraform.tfvars and fill in your own values.
 
-project_id = ""
-region     = ""
-domain     = ""
+project_id              = ""
+region                  = ""
+domain                  = ""
+storage_bucket_location = ""

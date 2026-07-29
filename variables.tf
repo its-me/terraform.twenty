@@ -6,13 +6,11 @@ variable "project_id" {
 variable "region" {
   description = "GCP region for all resources."
   type        = string
-  default     = "asia-south1"
 }
 
 variable "domain" {
-  description = "Custom domain Twenty will be served on (e.g. crm.wheele.rs). Used for the Cloud Run domain mapping and SERVER_URL."
+  description = "Custom domain Twenty will be served on (e.g. crm.example.com). Used for the Cloud Run domain mapping and SERVER_URL."
   type        = string
-  default     = "crm.wheele.rs"
 }
 
 variable "image_tag" {
@@ -108,7 +106,6 @@ variable "worker_instance_count" {
 variable "storage_bucket_location" {
   description = "Location for the GCS bucket backing Twenty's file storage."
   type        = string
-  default     = "ASIA"
 }
 
 variable "labels" {
