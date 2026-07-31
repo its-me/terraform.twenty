@@ -104,8 +104,9 @@ variable "worker_instance_count" {
 }
 
 variable "storage_bucket_location" {
-  description = "Location for the GCS bucket backing Twenty's file storage."
+  description = "Location for the GCS bucket backing Twenty's file storage. Defaults to `region` if unset."
   type        = string
+  default     = null
 }
 
 variable "labels" {

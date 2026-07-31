@@ -4,7 +4,7 @@
 resource "google_storage_bucket" "twenty_files" {
   name     = "${var.project_id}-twenty-files"
   project  = var.project_id
-  location = var.storage_bucket_location
+  location = coalesce(var.storage_bucket_location, var.region)
 
   uniform_bucket_level_access = true
   force_destroy               = false
