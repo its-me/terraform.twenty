@@ -19,47 +19,17 @@ resource "google_project_service" "apis" {
   disable_on_destroy = false
 }
 
-resource "google_compute_network" "main" {
-  name                    = "twenty-vpc"
-  project                 = var.project_id
-  auto_create_subnetworks = false
+# Shared VPC network/subnet/connector for all Wheelers app deployments in this project.
+# This is the owning caller (create = true); other apps (e.g. terraform.outline) point
+# at the same `name` with create = false to read these resources back instead of
+# creating their own.
+module "network" {
+  source = "../terraform.module.network"
 
-  depends_on = [google_project_service.apis]
-}
-
-resource "google_compute_subnetwork" "main" {
-  name          = "twenty-subnet"
-  project       = var.project_id
-  region        = var.region
-  network       = google_compute_network.main.id
-  ip_cidr_range = "10.10.0.0/24"
-}
-
-# Reserved range + peering so Cloud SQL and Memorystore get private IPs on this VPC.
-resource "google_compute_global_address" "private_service_range" {
-  name          = "twenty-private-service-range"
-  project       = var.project_id
-  purpose       = "VPC_PEERING"
-  address_type  = "INTERNAL"
-  prefix_length = 20
-  network       = google_compute_network.main.id
-}
-
-resource "google_service_networking_connection" "private_service_connection" {
-  network                 = google_compute_network.main.id
-  service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.private_service_range.name]
-
-  depends_on = [google_project_service.apis]
-}
-
-# Lets Cloud Run reach the private VPC (Cloud SQL, Memorystore).
-resource "google_vpc_access_connector" "main" {
-  name          = "twenty-connector"
-  project       = var.project_id
-  region        = var.region
-  network       = google_compute_network.main.name
-  ip_cidr_range = "10.10.1.0/28"
+  project_id = var.project_id
+  region     = var.region
+  name       = "wheelers"
+  create     = true
 
   depends_on = [google_project_service.apis]
 }

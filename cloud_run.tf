@@ -50,7 +50,7 @@ resource "google_cloud_run_v2_service" "server" {
     }
 
     vpc_access {
-      connector = google_vpc_access_connector.main.id
+      connector = module.network.vpc_connector_id
       egress    = "PRIVATE_RANGES_ONLY"
     }
 
@@ -130,7 +130,7 @@ resource "google_cloud_run_v2_worker_pool" "worker" {
     service_account = google_service_account.cloud_run.email
 
     vpc_access {
-      connector = google_vpc_access_connector.main.id
+      connector = module.network.vpc_connector_id
       egress    = "PRIVATE_RANGES_ONLY"
     }
 
