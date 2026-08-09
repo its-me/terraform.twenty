@@ -20,16 +20,15 @@ resource "google_project_service" "apis" {
 }
 
 # Shared VPC network/subnet/connector for all app deployments in this project.
-# This is the owning caller (create = true); other apps (e.g. terraform.outline) point
-# at the same `name` with create = false to read these resources back instead of
-# creating their own.
+# Owned and created by terraform.module.network's examples/owner stack, not by any
+# individual app; every app (this one included) just reads it back (create = false).
 module "network" {
   source = "git::https://github.com/its-me/terraform.module.network.git?ref=v0.1.0"
 
   project_id = var.project_id
   region     = var.region
   name       = var.network_name
-  create     = true
+  create     = false
 
   depends_on = [google_project_service.apis]
 }
