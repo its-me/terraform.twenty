@@ -24,7 +24,7 @@ resource "google_project_service" "apis" {
 # at the same `name` with create = false to read these resources back instead of
 # creating their own.
 module "network" {
-  source = "../terraform.module.network"
+  source = "git::https://github.com/its-me/terraform.module.network.git"
 
   project_id = var.project_id
   region     = var.region
