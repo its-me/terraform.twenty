@@ -19,7 +19,7 @@ resource "google_project_service" "apis" {
   disable_on_destroy = false
 }
 
-# Shared VPC network/subnet/connector for all Wheelers app deployments in this project.
+# Shared VPC network/subnet/connector for all app deployments in this project.
 # This is the owning caller (create = true); other apps (e.g. terraform.outline) point
 # at the same `name` with create = false to read these resources back instead of
 # creating their own.
@@ -28,7 +28,7 @@ module "network" {
 
   project_id = var.project_id
   region     = var.region
-  name       = "wheelers"
+  name       = var.network_name
   create     = true
 
   depends_on = [google_project_service.apis]
