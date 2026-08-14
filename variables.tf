@@ -25,6 +25,12 @@ variable "image_tag" {
   default     = "latest"
 }
 
+variable "db_instance_name" {
+  description = "Name of the shared Cloud SQL instance (see terraform.module.postgresql). Must match the value used by every other app sharing this instance."
+  type        = string
+  default     = "postgres"
+}
+
 variable "db_name" {
   description = "Postgres database name (matches PG_DATABASE_NAME / default 'default' in docker-compose.yml)."
   type        = string
