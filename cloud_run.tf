@@ -114,7 +114,7 @@ resource "google_cloud_run_v2_service" "server" {
 
   depends_on = [
     module.postgresql,
-    google_redis_instance.main,
+    module.redis,
     google_secret_manager_secret_version.twenty,
   ]
 }
@@ -175,7 +175,7 @@ resource "google_cloud_run_v2_worker_pool" "worker" {
 
   depends_on = [
     module.postgresql,
-    google_redis_instance.main,
+    module.redis,
     google_secret_manager_secret_version.twenty,
     google_cloud_run_v2_service.server, # server owns DB migrations; let it boot first
   ]

@@ -14,3 +14,10 @@ domain     = ""
 # Optional, defaults to "postgres". Must match the value used by every other app
 # sharing this Cloud SQL instance (see terraform.module.postgresql).
 # db_instance_name = ""
+
+# Optional, defaults to "redis". Must match the value used by every other app
+# sharing this Redis instance (see terraform.module.redis).
+# redis_instance_name = ""
+
+# Optional, defaults to 0. Must be unique among apps sharing this Redis instance.
+# redis_db = 0

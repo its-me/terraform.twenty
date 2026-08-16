@@ -15,7 +15,7 @@ resource "random_password" "app_secret" {
 
 locals {
   pg_database_url = "postgresql://${var.db_user}:${module.postgresql.database_password}@${module.postgresql.instance_private_ip}:5432/${var.db_name}"
-  redis_url       = "redis://${google_redis_instance.main.host}:${google_redis_instance.main.port}"
+  redis_url       = "redis://${module.redis.host}:${module.redis.port}/${var.redis_db}"
 
   secrets = {
     pg-database-url           = local.pg_database_url
