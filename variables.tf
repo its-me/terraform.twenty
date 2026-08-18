@@ -43,24 +43,6 @@ variable "db_user" {
   default     = "twenty"
 }
 
-variable "db_tier" {
-  description = "Cloud SQL machine tier for the Postgres instance."
-  type        = string
-  default     = "db-custom-1-3840"
-}
-
-variable "db_availability_type" {
-  description = "Cloud SQL availability type: ZONAL or REGIONAL (REGIONAL = HA, higher cost)."
-  type        = string
-  default     = "ZONAL"
-}
-
-variable "db_disk_size_gb" {
-  description = "Cloud SQL disk size in GB."
-  type        = number
-  default     = 20
-}
-
 variable "redis_instance_name" {
   description = "Name of the shared Memorystore Redis instance (see terraform.module.redis). Must match the value used by every other app sharing this instance."
   type        = string
@@ -71,18 +53,6 @@ variable "redis_db" {
   description = "Redis logical DB index (0-15) this app uses to isolate its keys on the shared instance."
   type        = number
   default     = 0
-}
-
-variable "redis_tier" {
-  description = "Memorystore Redis service tier: BASIC (single node) or STANDARD_HA (replica + failover)."
-  type        = string
-  default     = "BASIC"
-}
-
-variable "redis_memory_size_gb" {
-  description = "Memorystore Redis instance memory size in GB."
-  type        = number
-  default     = 1
 }
 
 variable "server_cpu" {
