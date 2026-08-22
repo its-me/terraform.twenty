@@ -35,7 +35,7 @@ locals {
 }
 
 resource "google_cloud_run_v2_service" "server" {
-  name                = "twenty-server"
+  name                = "twenty"
   project             = var.project_id
   location            = var.region
   deletion_protection = false
