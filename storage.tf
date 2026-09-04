@@ -2,7 +2,7 @@
 # GCS's S3 interoperability API instead of provisioning a separate object store. This replaces
 # the `server-local-data` volume used for file storage in docker-compose.yml.
 resource "google_storage_bucket" "twenty_files" {
-  name     = "${var.project_id}-twenty-files"
+  name     = "${var.project_id}-twenty"
   project  = var.project_id
   location = coalesce(var.storage_bucket_location, var.region)
 
