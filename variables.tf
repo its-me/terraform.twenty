@@ -56,9 +56,9 @@ variable "redis_db" {
 }
 
 variable "server_cpu" {
-  description = "vCPUs allocated to the server Cloud Run container."
+  description = "vCPUs allocated to the server Cloud Run container. Must be >= 1 to pair with server_memory above 1Gi (Cloud Run caps memory at 1Gi for 0.5 CPU)."
   type        = string
-  default     = "0.5"
+  default     = "1"
 }
 
 variable "server_memory" {
