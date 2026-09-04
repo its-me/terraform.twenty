@@ -80,9 +80,9 @@ variable "server_max_instance_count" {
 }
 
 variable "worker_cpu" {
-  description = "vCPUs allocated to the worker pool container."
+  description = "vCPUs allocated to the worker pool container. Worker pools have no request-driven idle state to throttle down to, so GCP requires >= 1 here (unlike server_cpu)."
   type        = string
-  default     = "0.5"
+  default     = "1"
 }
 
 variable "worker_memory" {
