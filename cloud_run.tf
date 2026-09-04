@@ -70,6 +70,9 @@ resource "google_cloud_run_v2_service" "server" {
         # GCP requires cpu >= 1 whenever CPU is always allocated (unthrottled). Below
         # that, CPU must be throttled to idle outside of request processing.
         cpu_idle = true
+        # Twenty initializes a TypeORM module per workspace on boot, which can take
+        # several minutes; boost CPU during startup to shorten that window.
+        startup_cpu_boost = true
       }
 
       dynamic "env" {
@@ -98,9 +101,13 @@ resource "google_cloud_run_v2_service" "server" {
           path = "/healthz"
           port = 3000
         }
+        # Twenty's boot logs thousands of per-workspace TypeORM module inits before it
+        # answers healthz; the previous 110s budget (20 * 5s) wasn't enough and Cloud
+        # Run kept killing/retrying the container until the whole deploy failed. 610s
+        # gives it real room to finish.
         initial_delay_seconds = 10
-        period_seconds        = 5
-        failure_threshold     = 20
+        period_seconds        = 10
+        failure_threshold     = 60
         timeout_seconds       = 5
       }
 
