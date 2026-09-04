@@ -62,9 +62,9 @@ variable "server_cpu" {
 }
 
 variable "server_memory" {
-  description = "Memory allocated to the server Cloud Run container. Cloud Run requires at least 512Mi when cpu < 1."
+  description = "Memory allocated to the server Cloud Run container. 512Mi is not enough -- the server OOM-crashes running migrations on startup (V8 heap exhaustion around 250MB, on top of the rest of the process); 2Gi has been enough for migrations to complete."
   type        = string
-  default     = "512Mi"
+  default     = "2Gi"
 }
 
 variable "server_min_instance_count" {
