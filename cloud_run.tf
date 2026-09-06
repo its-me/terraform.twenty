@@ -23,7 +23,7 @@ locals {
   }
 
   server_env = merge(local.base_env, {
-    NODE_PORT  = "3000"
+    NODE_PORT  = tostring(var.server_port)
     SERVER_URL = "https://${var.domain}"
   })
 
@@ -59,7 +59,7 @@ resource "google_cloud_run_v2_service" "server" {
       image = local.image
 
       ports {
-        container_port = 3000
+        container_port = var.server_port
       }
 
       resources {
@@ -99,7 +99,7 @@ resource "google_cloud_run_v2_service" "server" {
       startup_probe {
         http_get {
           path = "/healthz"
-          port = 3000
+          port = var.server_port
         }
         # Twenty's boot logs thousands of per-workspace TypeORM module inits before it
         # answers healthz; the previous 110s budget (20 * 5s) wasn't enough and Cloud
@@ -114,7 +114,7 @@ resource "google_cloud_run_v2_service" "server" {
       liveness_probe {
         http_get {
           path = "/healthz"
-          port = 3000
+          port = var.server_port
         }
         period_seconds  = 10
         timeout_seconds = 5
