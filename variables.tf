@@ -82,7 +82,7 @@ variable "server_min_instance_count" {
 variable "server_max_instance_count" {
   description = "Maximum number of server instances."
   type        = number
-  default     = 3
+  default     = 1
 }
 
 variable "worker_cpu" {
